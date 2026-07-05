@@ -1,0 +1,793 @@
+﻿<Window x:Class="ManagerForOmronFHVisionSystemSimulators.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ManagerForOmronFHVisionSystemSimulators.Views" 
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:vm="clr-namespace:ManagerForOmronFHVisionSystemSimulators.ViewModels"
+        xmlns:views="clr-namespace:ManagerForOmronFHVisionSystemSimulators.Views"
+        d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
+        mc:Ignorable="d"
+        WindowStyle="None" 
+        AllowsTransparency="True"
+        Background="Transparent"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        ResizeMode="CanMinimize"
+        Title="Manager for Omron FH Vision System Simulators" 
+        WindowStartupLocation="CenterScreen"
+        SizeToContent="WidthAndHeight"
+        KeyDown="Window_KeyDown"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="True"
+        Loaded="Window_ContentRendered"
+        Icon="/StyleAndGrafics/CameraFolder.ico">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <Style TargetType="FrameworkElement">
+            <Setter Property="ToolTipService.InitialShowDelay" Value="1000" />
+            <Setter Property="ToolTipService.ShowDuration" Value="6000" />
+            <Setter Property="ToolTipService.BetweenShowDelay" Value="0" />
+        </Style>
+    </Window.Resources>
+
+    <Window.InputBindings>
+        <KeyBinding Key="F1" Command="{Binding OpenInfoCommand}" />
+        <KeyBinding Key="L" Modifiers="Control" Command="{Binding LoadItemCommand}" />
+        <KeyBinding Key="L" Modifiers="Control+Shift" Command="{Binding LoadCommand}" />
+        <KeyBinding Key="S" Modifiers="Control" Command="{Binding SaveSimulatorChangesCommand}" />
+        <KeyBinding Key="S" Modifiers="Control+Shift" Command="{Binding SaveUSBDiskChangesCommand}" />
+        <KeyBinding Key="E" Modifiers="Control" Command="{Binding OpenActiveUSBDiskFolderCommand}" />
+        <KeyBinding Key="E" Modifiers="Control+Shift" Command="{Binding OpenItemFolderCommand}" />
+        <KeyBinding Key="B" Modifiers="Control" Command="{Binding CopySelectedToFromBackupsCommand}" />
+        <KeyBinding Key="Delete" Modifiers="Control" Command="{Binding DeleteSelectedCommand}" />
+        <KeyBinding Key="Tab" Modifiers="Control" Command="{Binding NextTabCommand}" />
+        <KeyBinding Key="Tab" Modifiers="Control+Shift" Command="{Binding PreviousTabCommand}" />
+    </Window.InputBindings>
+
+
+
+    <Border Width="2300" Height="1300" 
+                CornerRadius="10" BorderThickness="3" BorderBrush="Black" Background="Black">
+        <Border.LayoutTransform>
+            <ScaleTransform ScaleX="{Binding UIScale}" ScaleY="{Binding UIScale}" />
+        </Border.LayoutTransform>
+        <Border CornerRadius="10" Padding="5">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#555555" Offset="0.0"/>
+                    <GradientStop Color="#333333" Offset="0.5"/>
+                    <GradientStop Color="#555555" Offset="1.0"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+            <Grid x:Name="Main_Grid">
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#555555" Offset="0.0"/>
+                        <GradientStop Color="#333333" Offset="0.5"/>
+                        <GradientStop Color="#555555" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+
+
+                <!-- Defenition Zeile -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="1040*"/>
+                </Grid.RowDefinitions>
+                <!-- Defenition Spalten -->
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="350"/>
+                    <ColumnDefinition Width="2"/>
+                    <ColumnDefinition Width="500*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="btnSettings" 
+                    Width="40" 
+                    HorizontalAlignment="Left"
+                    Command="{Binding OpenSettingsCommand}"
+                    Background="Transparent" 
+                    Margin="-4,-15,0,0"
+                    Focusable="False"
+                    FontSize="25"
+                    FontWeight="Medium"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    HorizontalContentAlignment="Left"
+                    Style="{StaticResource HiddenButton}"
+                    >
+                    <Viewbox>
+                        <Canvas Width="100" Height="100" Canvas.Left="0" Canvas.Top="0" >
+                            <ContentControl 
+                    ContentTemplate="{StaticResource Settings}"  
+                    />
+                        </Canvas>
+                    </Viewbox>
+                </Button>
+
+                <Label
+                        x:Name="ManagerForOmronFHVisionSystemSimulators"
+                        Grid.Row="0"
+                        Grid.Column="3"
+                        Margin="5,-15,180,0"
+                        FontSize="35"
+                        FontWeight="Medium"
+                        Foreground="Lime"
+                        HorizontalContentAlignment="Left"
+                        VerticalContentAlignment="Top"
+                        >
+                    Manager for Omron FH Vision System Simulators
+                </Label>
+
+                <Grid
+                    x:Name="Grid_Close_Buttons"
+                    Grid.Row="0"
+                    Grid.Column="2">
+                    <Control x:Name="FocusDummy" Focusable="True" Width="0" Height="0" TabIndex="0"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <!--Info Button-->
+                        <Button x:Name="btnInfo" Width="30" Height="30"
+                            BorderBrush="Transparent" Background="Transparent"
+                            Command="{Binding OpenInfoCommand}"
+                            ToolTip="Shortcut: F1&#x0a;For Info &amp; Support"
+                            Margin="0,-20,0,0"
+                            Focusable="False"
+                            Cursor="Hand">
+                            <TextBlock Text="i" Foreground="Lime" FontSize="22" FontWeight="Bold" 
+                                FontFamily="Consolas" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="Lime" BlurRadius="8" ShadowDepth="0" Opacity="0.8"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}" CornerRadius="15">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#222222"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <!--Minimize Button-->
+                        <Button x:Name="btnMinimize" Width="30" Height="30"
+                            BorderBrush="Transparent" 
+                            Command="{Binding MinimizeCommand}" 
+                            Style="{StaticResource MyMinimiButton}"
+                            Margin="0,-20,5,0"
+                            Focusable="False">
+                            <Viewbox>
+                                <Canvas Width="10" Height="100" Canvas.Left="0" Canvas.Top="0" >
+                                    <ContentControl 
+                                         ContentTemplate="{StaticResource MinimizedSymbol}" 
+                                         Canvas.Left="-35" Canvas.Top="40"
+                                     />
+                                </Canvas>
+                            </Viewbox>
+                        </Button>
+                        <!--Close Button-->
+                        <Button x:Name="btnClose" Width="30" Height="30"
+                            Style="{StaticResource MyCloseButton}"
+                            Command="{Binding CloseCommand}"
+                            Margin="0,-20,0,0"
+                            Focusable="False">
+                            <Viewbox>
+                                <Canvas Width="100" Height="100" Canvas.Left="0" Canvas.Top="0" >
+                                    <ContentControl 
+                                        ContentTemplate="{StaticResource CrossSymbol}" 
+                                        Canvas.Left="10" Canvas.Top="10"
+                                    />
+                                </Canvas>
+                            </Viewbox>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+
+                <Grid
+                    x:Name="Buttons_Main_Grid"
+                    Grid.Row="1"
+                    Grid.Column="0">
+                    <!-- Defenition Zeile -->
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="120"/>
+                        <RowDefinition Height="120"/>
+                        <RowDefinition Height="120"/>
+                        <RowDefinition Height="120"/>
+                        <RowDefinition Height="120"/>
+                        <RowDefinition Height="120"/>
+                        <RowDefinition Height="120"/>
+                        <RowDefinition Height="20*"/>
+                        <RowDefinition Height="120"/>
+                        <RowDefinition Height="120"/>
+                        <RowDefinition Height="1"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="120"/>
+                    </Grid.RowDefinitions>
+                    <Button x:Name="LoadSelectedItemBtn"
+                        Style="{StaticResource ButtonStyleBlue}"
+                        Visibility="{Binding IsUSBFeatureEnabled, Converter={StaticResource BoolToVis}}"
+                        Command="{Binding LoadItemCommand}"
+                        ToolTip="Shortcut: CTRL+L"
+                        Margin="0,5,0,5"
+                        Focusable="False"
+                        Width="300"
+                        Height="110"
+                        Grid.Row="0">
+                        <Grid Width="280">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <iconPacks:PackIconForkAwesome Grid.Column="0" 
+                                    Kind="AngleDown" 
+                                    Foreground="White"
+                                    Width="80" 
+                                    Height="80" 
+                                    HorizontalAlignment="Center" 
+                                    VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" 
+                               Text="Load Item" 
+                               Foreground="White" 
+                               FontSize="36" 
+                               FontWeight="Medium" 
+                               TextAlignment="Center" 
+                               HorizontalAlignment="Center" 
+                               VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="LoadSimulatorUSBDiskBtn"
+                            Style="{StaticResource ButtonStyleBlueMidle}"
+                            Command="{Binding LoadCommand}"
+                            ToolTip="Shortcut: CTRL+SHIFT+L"
+                            Margin="0,5,0,5"
+                            Focusable="False"
+                            Width="300"
+                            Height="110"
+                            Grid.Row="1">
+                        <Grid Width="280">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <iconPacks:PackIconForkAwesome Grid.Column="0"  
+                                Kind="AngleDoubleDown" 
+                                Foreground="White"
+                                Width="80" 
+                                Height="80" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" 
+                                Text="Load" 
+                                Foreground="White" 
+                                FontSize="36" 
+                                FontWeight="Medium" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="SaveSimulatorChanges"
+                        Style="{StaticResource ButtonStyleBlue}"
+                        Command="{Binding SaveSimulatorChangesCommand}"
+                        ToolTip="Shortcut: CTRL+S"
+                        Margin="0,5,0,5"
+                        Focusable="False"
+                        Width="300"
+                        Height="110"
+                        Grid.Row="2">
+                        <Grid Width="280">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <iconPacks:PackIconCodicons Grid.Column="0"   
+                                Kind="Save" 
+                                Foreground="White"
+                                Width="80" 
+                                Height="80" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" 
+                                Text="Simulator&#x0a;Changes" 
+                                Foreground="White" 
+                                FontSize="36" 
+                                FontWeight="Medium" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="SaveUSBDiskChanges"
+                            Style="{StaticResource ButtonStyleBlueMidle}"
+                            Visibility="{Binding IsUSBFeatureEnabled, Converter={StaticResource BoolToVis}}"
+                            Command="{Binding SaveUSBDiskChangesCommand}"
+                            ToolTip="Shortcut: CTRL+SHIFT+S"
+                            Margin="0,5,0,5"
+                            Focusable="False"
+                            Width="300"
+                            Height="110"
+                            Grid.Row="3">
+                        <Grid Width="280">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <iconPacks:PackIconCodicons Grid.Column="0"  
+                                Kind="SaveAll" 
+                                Foreground="White"
+                                Width="80" 
+                                Height="80" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" 
+                                Text="USBDisk&#x0a;Changes" 
+                                Foreground="White" 
+                                FontSize="36" 
+                                FontWeight="Medium" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="OpenFolderActiveUSBDisk"
+                        Style="{StaticResource ButtonStyleBlue}"
+                        Command="{Binding OpenActiveUSBDiskFolderCommand}"
+                            ToolTip="Shortcut: CTRL+E"
+                            Margin="0,5,0,5"
+                            Focusable="False"
+                            Width="300"
+                            Height="110"
+                            Grid.Row="4">
+                        <Grid Width="280">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <iconPacks:PackIconCodicons Grid.Column="0" 
+                                Kind="FolderOpened" 
+                                Foreground="White"
+                                Width="80" 
+                                Height="80" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" 
+                                Text="Active&#x0a;USBDisk" 
+                                Foreground="White" 
+                                FontSize="36" 
+                                FontWeight="Medium" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="OpenFolderSelectedItem"
+                         Style="{StaticResource ButtonStyleBlueMidle}"
+                         Command="{Binding OpenItemFolderCommand}"
+                         ToolTip="Shortcut: CTRL+SHIFT+E"
+                         Margin="0,5,0,5"
+                         Focusable="False"
+                         Width="300"
+                         Height="110"
+                         Grid.Row="5">
+                        <Grid Width="280">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <iconPacks:PackIconCodicons Grid.Column="0" 
+                                 Kind="RootFolderOpened" 
+                                 Foreground="White"
+                                 Width="80" 
+                                 Height="80" 
+                                 HorizontalAlignment="Center" 
+                                 VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" 
+                                 Text="Open Tab&#x0a;or Item" 
+                                 Foreground="White" 
+                                 FontSize="36" 
+                                 FontWeight="Medium" 
+                                 TextAlignment="Center" 
+                                 HorizontalAlignment="Center" 
+                                 VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="DeleteOnOffAfterCopy"
+                        Command="{Binding ToggleDeleteAfterCopyCommand}"
+                        Style="{StaticResource ButtonStyleRed}"
+                        Background="{Binding DeleteAfterCopyColor, FallbackValue=Gray}"
+                            Margin="0,5,0,5"
+                            Focusable="False"
+                            Width="300"
+                            Height="110"
+                            Grid.Row="9">
+                        <Grid Width="280">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <iconPacks:PackIconPhosphorIcons Grid.Column="0" 
+                                Kind="Trash"
+                                Foreground="White"
+                                Width="80" 
+                                Height="80" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" 
+                                Foreground="White" 
+                                FontSize="36" 
+                                FontWeight="Medium" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center">
+                                <TextBlock.Text>
+                                    <Binding Path="DeleteAfterCopyText" FallbackValue="After&#x0a;Copy: ON" />
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </Grid>
+                    </Button>
+
+                    <Button
+                        x:Name="CopySelectedToFromBackups"
+                        Style="{StaticResource ButtonStyleBlueMidle}"
+                        Command="{Binding CopySelectedToFromBackupsCommand}"
+                            Margin="0,5,0,5"
+                            Focusable="False"
+                            Width="300"
+                            Height="110"
+                            Grid.Row="8"
+                            ToolTip="Shortcut: CTRL+B">
+                        <Grid Width="280">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <iconPacks:PackIconCodicons Grid.Column="0" 
+                                Kind="Copy" 
+                                Foreground="White"
+                                Width="80" 
+                                Height="80" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" 
+                                Text="Backup /&#x0a;Restore" 
+                                Foreground="White" 
+                                FontSize="36" 
+                                FontWeight="Medium" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+
+                    <Button
+                        x:Name="DeleteSelectedItemsButton"
+                        Style="{StaticResource ButtonStyleYellow}"
+                        Command="{Binding DeleteSelectedCommand}"
+                        ToolTip="Shortcut: CTRL+DELETE"
+                        Margin="0,5,0,5"
+                        Focusable="False"
+                        Width="300"
+                        Height="110"
+                        Grid.Row="6">
+                        <Grid Width="280">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <iconPacks:PackIconPhosphorIcons Grid.Column="0" 
+                                Kind="Trash" 
+                                Foreground="Black"
+                                Width="80" 
+                                Height="80" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" 
+                                Text="Delete&#x0a;Item(s)"
+                                Foreground="Black" 
+                                FontSize="36" 
+                                FontWeight="Medium" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+
+
+
+                    <TextBlock 
+                       x:Name="Copyright"
+                       Text="Designed and Created&#x0a;by Georg Black"
+                       Grid.Row="12"
+                       Grid.Column="0"
+                       Margin="5,5,10,5"
+                       FontFamily="MV Boli"
+                       FontSize="30"
+                       Foreground="Lime"
+                       TextWrapping="Wrap"
+                       LineHeight="10"
+                       FontWeight="Normal"
+                       TextAlignment="Center">
+                    </TextBlock>
+                </Grid>
+
+                <Grid
+                    x:Name="List_Main_Grid"
+                    Grid.Row="1"
+                    Grid.Column="3">
+                    <!-- Defenition Zeile -->
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="1"/>
+                        <RowDefinition Height="1"/>
+                        <RowDefinition Height="400*"/>
+                    </Grid.RowDefinitions>
+                    <Grid
+                        x:Name="SimulatorLabelGrid"
+                        Grid.Row="0"
+                        Grid.Column="0">
+                        <!-- Defenition Spalten -->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="13*"/>
+                            <ColumnDefinition Width="100*"/>
+                            <ColumnDefinition Width="7*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            x:Name="ActiveSimulatorLabel" 
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="0,0,0,0"
+                            FontSize="25"
+                            FontWeight="Medium"
+                            Foreground="Lime"
+                            HorizontalContentAlignment="Right"
+                            VerticalContentAlignment="Center"
+                            >
+                            Active Simulator:
+                        </Label>
+                        <TextBox
+                            x:Name="ActiveSimulatorText"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Margin="5,10,5,0"
+                            FontSize="25"
+                            FontWeight="Medium"
+                            Background="#555555"
+                            BorderBrush="Black"
+                            BorderThickness="3"   
+                            HorizontalContentAlignment="Left"
+                            VerticalContentAlignment="Center"
+                            GotFocus="ActiveSimulatorText_GotFocus" 
+                            LostFocus="ActiveSimulatorText_LostFocus"
+                            AcceptsReturn="False"
+                            Foreground="{Binding ActiveSimulatorColor}"
+                            Text="{Binding ActiveSimulatorName, UpdateSourceTrigger=PropertyChanged}"
+                            ToolTip="Shortcut: F2">
+                            <TextBox.InputBindings>
+                                <KeyBinding Key="Return" Command="{Binding RenameCommand}" />
+                            </TextBox.InputBindings>
+                        </TextBox>
+                        <Button
+                            x:Name="RenameSimulator" 
+                            Style="{StaticResource ButtonStyleBlueLight}"
+                            Command="{Binding RenameCommand}"
+                            ToolTip="Shortcut: ENTER"
+                            FontSize="25"
+                            FontWeight="Medium"
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            Margin="5,10,0,0"
+                            Focusable="False"
+                            Height="40"
+                            Content="Rename">
+                        </Button>
+                    </Grid>
+                    <Grid
+                        x:Name="USBDiskLabelGrid"
+                        Grid.Row="1"
+                        Grid.Column="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="13*"/>
+                            <ColumnDefinition Width="100*"/>
+                            <ColumnDefinition Width="7*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            x:Name="Active_USBDiskLabel"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="0,0,0,0"
+                            FontSize="25"
+                            FontWeight="Medium"
+                            Foreground="Lime"
+                            HorizontalContentAlignment="Right"
+                            VerticalContentAlignment="Center"
+                            >
+                            Active USBDisk:
+                        </Label>
+                        <TextBox
+                            x:Name="ActiveUSBDiskText"
+                            IsEnabled="{Binding IsUSBFeatureEnabled}"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Margin="5,10,5,0"
+                            FontSize="25"
+                            FontWeight="Medium"
+                            Background="#555555"
+                            BorderBrush="Black"
+                            BorderThickness="3"   
+                            HorizontalContentAlignment="Left"
+                            VerticalContentAlignment="Center"
+                            GotFocus="ActiveUSBDiskText_GotFocus" 
+                            LostFocus="ActiveUSBDiskText_LostFocus"
+                            AcceptsReturn="False"
+                            Text="{Binding ActiveUSBDiskName, UpdateSourceTrigger=PropertyChanged}"
+                            Foreground="{Binding ActiveUSBDiskColor}"
+                            ToolTip="Shortcut: F3">
+                            <TextBox.InputBindings>
+                                <KeyBinding Key="Return" Command="{Binding RenameUSBDiskCommand}" />
+                            </TextBox.InputBindings>
+                        </TextBox>
+                        <Button
+                            x:Name="RenameUSBDisk" 
+                            Style="{StaticResource ButtonStyleBlueLight}"
+                            Command="{Binding RenameUSBDiskCommand}"
+                            Visibility="{Binding IsUSBFeatureEnabled, Converter={StaticResource BoolToVis}}"
+                            ToolTip="Shortcut: ENTER"
+                            FontSize="25"
+                            FontWeight="Medium"
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            Margin="5,10,0,0"
+                            Focusable="False"
+                            Height="40"
+                            Content="Rename">
+                        </Button>
+                    </Grid>
+                    <Grid
+                        x:Name="ItemLabelGrid"
+                        Grid.Row="2"
+                        Grid.Column="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="13*"/>
+                            <ColumnDefinition Width="100*"/>
+                            <ColumnDefinition Width="7*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            x:Name="Selected_Item"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="0,0,0,0"
+                            FontSize="25"
+                            FontWeight="Medium"
+                            Foreground="Lime"
+                            HorizontalContentAlignment="Right"
+                            VerticalContentAlignment="Center"
+                            >
+                            Selected Item:
+                        </Label>
+                        <TextBox
+                            x:Name="Selected_Item_TextBox"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Margin="5,10,5,0"
+                            FontSize="25"
+                            FontWeight="Medium"
+                            Background="#555555"
+                            BorderBrush="Black"
+                            Foreground="White"
+                            BorderThickness="3"   
+                            HorizontalContentAlignment="Left"
+                            VerticalContentAlignment="Center"
+                            GotFocus="Selected_Item_TextBox_GotFocus" 
+                            LostFocus="Selected_Item_TextBox_LostFocus"
+                            AcceptsReturn="False"
+                            Text="{Binding SelectedItemName, UpdateSourceTrigger=PropertyChanged}"
+                            ToolTip="Shortcut: F4">
+                            <TextBox.InputBindings>
+                                <KeyBinding Key="Return" Command="{Binding RenameItemCommand}" />
+                            </TextBox.InputBindings>
+                        </TextBox>
+                        <Button
+                            x:Name="RenameItem" 
+                            Style="{StaticResource ButtonStyleBlueLight}"
+                            Command="{Binding RenameItemCommand}"
+                            ToolTip="Shortcut: ENTER"
+                            FontSize="25"
+                            FontWeight="Medium"
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            Margin="5,10,0,0"
+                            Focusable="False"
+                            Height="40"
+                            Content="Rename">
+                        </Button>
+                    </Grid>
+                    <Grid
+                        x:Name="LinkedUSBDiskLabelGrid"
+                        Grid.Row="3"
+                        Grid.Column="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="13*"/>
+                            <ColumnDefinition Width="100*"/>
+                            <ColumnDefinition Width="7*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            x:Name="LinkedUSBDisk"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="0,0,0,0"
+                            FontSize="25"
+                            FontWeight="Medium"
+                            Foreground="Lime"
+                            HorizontalContentAlignment="Right"
+                            VerticalContentAlignment="Center"
+                            >
+                            Linked USBDisk:
+                        </Label>
+                        <TextBox
+                            x:Name="LinkedUSBDiskTextBox"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            IsEnabled="False"
+                            Margin="5,10,5,0"
+                            FontSize="25"
+                            FontWeight="Medium"
+                            Background="#555555"
+                            BorderBrush="Black"
+                            Foreground="White"
+                            BorderThickness="3"   
+                            HorizontalContentAlignment="Left"
+                            VerticalContentAlignment="Center"
+                            AcceptsReturn="False"
+                            Text="{Binding LinkedUSBDiskName, UpdateSourceTrigger=PropertyChanged}">
+                        </TextBox>
+                    </Grid>
+
+
+                    <TabControl x:Name="MainTabControl" 
+                                Grid.Row="6" 
+                                Background="Transparent" 
+                                BorderBrush="Lime" 
+                                BorderThickness="0,2,0,0" 
+                                Margin="0,10,0,0"
+                                ItemContainerStyle="{StaticResource MyCustomTabItemStyle}"
+                                SelectedIndex="{Binding SelectedTabIndex}">
+                        <TabItem Header="Simulators"
+                                 ToolTip="Shortcut for forward: CTRL+TAB&#x0a;Shortcut to back: CTRL+SHIFT+TAB">
+                            <views:SimulatorsView x:Name="SimulatorsUc" DataContext="{Binding SimulatorsVM}" />
+                        </TabItem>
+
+                        <TabItem Header="USBDisks"
+                                 Visibility="{Binding IsUSBFeatureEnabled, Converter={StaticResource BoolToVis}}"
+                                 ToolTip="Shortcut for forward: CTRL+TAB&#x0a;Shortcut to back: CTRL+SHIFT+TAB">
+                            <views:USBDisksView x:Name="USBDisksUc" DataContext="{Binding USBDisksVM}" />
+                        </TabItem>
+                        <TabItem Header="Simulator Backups"
+                                 ToolTip="Shortcut for forward: CTRL+TAB&#x0a;Shortcut to back: CTRL+SHIFT+TAB">
+                            <views:SimulatorBackupsView x:Name="SimulatorBackupsUc" DataContext="{Binding SimulatorBackupsVM}" />
+                        </TabItem>
+                        <TabItem Header="USBDisk Backups"
+                                 Visibility="{Binding IsUSBFeatureEnabled, Converter={StaticResource BoolToVis}}"
+                                 ToolTip="Shortcut for forward: CTRL+TAB&#x0a;Shortcut to back: CTRL+SHIFT+TAB">
+                            <views:USBDiskBackupsView x:Name="USBDiskBackupsUc" DataContext="{Binding USBDiskBackupsVM}" />
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+            </Grid>
+        </Border>
+    </Border>
+</Window>

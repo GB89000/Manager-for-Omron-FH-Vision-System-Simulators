@@ -1,0 +1,379 @@
+﻿<Window x:Class="SettingsNamespace.ProgrammSettings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SettingsNamespace"
+        xmlns:properties="clr-namespace:ManagerForOmronFHVisionSystemSimulators.Properties"
+        mc:Ignorable="d"
+        WindowStyle="None" 
+        AllowsTransparency="True"
+        Background="Transparent"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        Title="Settings" 
+        WindowStartupLocation="CenterOwner"
+        Width="1600" 
+        SizeToContent="Height"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="True">
+
+
+    <Border CornerRadius="10" BorderThickness="3" BorderBrush="Black" Background="Black">
+        <Border CornerRadius="10" Padding="5">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#555555" Offset="0.0"/>
+                    <GradientStop Color="#333333" Offset="0.5"/>
+                    <GradientStop Color="#555555" Offset="1.0"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            
+            <Grid x:Name="Main_Grid">
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#555555" Offset="0.0"/>
+                        <GradientStop Color="#333333" Offset="0.5"/>
+                        <GradientStop Color="#555555" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="100"/> 
+                </Grid.RowDefinitions>
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="350"/>
+                    <ColumnDefinition Width="14*"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+
+                <Label
+                    x:Name="LabelSettings"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="0,-15,0,0"
+                    FontSize="35"
+                    FontWeight="Medium"
+                    Background="Transparent"
+                    Foreground="Lime" 
+                    Grid.ColumnSpan="2"
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Top">
+                    Settings
+                </Label>
+
+                <Label
+                    x:Name="Resolution"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="0,0,0,0"
+                    FontSize="30"
+                    FontWeight="Medium"
+                    Foreground="White"
+                    HorizontalContentAlignment="Right"
+                    VerticalContentAlignment="Center">
+                    Resolution:
+                </Label>
+
+                <ComboBox x:Name="UiScaleComboBox"
+                    Grid.Row="1" 
+                    Grid.Column="1"
+                    FontWeight="Medium"
+                    Margin="5,0,5,0"
+                    VerticalContentAlignment="Center"
+                    Cursor="Hand"
+                    SelectionChanged="UiScaleComboBox_SelectionChanged">
+                    <ComboBoxItem Content="0.5 - Small (50%)" />
+                    <ComboBoxItem Content="0.7 - Standard (70%)" />
+                    <ComboBoxItem Content="1.0 - Large (100%)" />
+                    <ComboBoxItem Content="1.5 - Very Large (150%)" />
+                </ComboBox>
+
+                <Label
+                    x:Name="SimulatorPath"
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Margin="0,0,0,0"
+                    FontSize="30"
+                    FontWeight="Medium"
+                    Foreground="White"
+                    HorizontalContentAlignment="Right"
+                    VerticalContentAlignment="Center">
+                    Simulator Path:
+                </Label>
+                
+                <TextBox
+                    x:Name="PathSimulatorTextBox"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="5,5,5,5"
+                    FontSize="25"
+                    FontWeight="Medium"
+                    BorderThickness="3"   
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    ToolTip="z.B. #FFFFFF" 
+                    Background="#1E1E1E"
+                    Foreground="White"
+                    BorderBrush="#555555">
+                </TextBox>
+                
+                <Button
+                    x:Name="BrowseSimulatorButton" 
+                    Style="{StaticResource ButtonStyleRed}"
+                    Click="BrowseSimulatorButton_Click"
+                    FontSize="25"
+                    FontWeight="Medium"
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    Margin="5,0,5,0"
+                    Focusable="False"
+                    Width="150"
+                    Height="40"
+                    Content="Browse">
+                </Button>
+
+                <Label
+                    x:Name="SimulatorsPathLabel"
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Margin="0,0,0,0"
+                    FontSize="30"
+                    FontWeight="Medium"
+                    Foreground="White"
+                    HorizontalContentAlignment="Right"
+                    VerticalContentAlignment="Center">
+                    Simulators Path:
+                </Label>
+                
+                <TextBox
+                    x:Name="PathSimulatorsTextBox"
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Margin="5,5,5,5"
+                    FontSize="25"
+                    FontWeight="Medium"
+                    BorderThickness="3"   
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    Background="#1E1E1E"
+                    Foreground="White"
+                    BorderBrush="#555555">
+                </TextBox>
+                
+                <Button
+                    x:Name="BrowseSimulatorsButton" 
+                    Style="{StaticResource ButtonStyleRed}"
+                    Click="BrowseSimulatorsButton_Click"
+                    FontSize="25"
+                    FontWeight="Medium"
+                    Grid.Row="3"
+                    Grid.Column="2"
+                    Margin="5,0,5,0"
+                    Focusable="False"
+                    Width="150"
+                    Height="40"
+                    Content="Browse">
+                </Button>
+
+                <Label
+                    x:Name="SimulatorsBackupPathLabel"
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Margin="0,0,0,0"
+                    FontSize="30"
+                    FontWeight="Medium"
+                    Foreground="White"
+                    HorizontalContentAlignment="Right"
+                    VerticalContentAlignment="Center">
+                    Simulators Backup Path:
+                </Label>
+                
+                <TextBox
+                    x:Name="PathSimulatorBackupsTextBox"
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Margin="5,5,5,5"
+                    FontSize="25"
+                    FontWeight="Medium"
+                    BorderThickness="3"   
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    Background="#1E1E1E"
+                    Foreground="White"
+                    BorderBrush="#555555">                    
+                </TextBox>
+                
+                <Button
+                    x:Name="BrowseSimulatorsBackupButton" 
+                    Style="{StaticResource ButtonStyleRed}"
+                    Click="BrowseSimulatorsBackupsButton_Click"
+                    FontSize="25"
+                    FontWeight="Medium"
+                    Grid.Row="4"
+                    Grid.Column="2"
+                    Margin="5,0,5,0"
+                    Focusable="False"
+                    Width="150"
+                    Height="40"
+                    Content="Browse">
+                </Button>
+
+                <Label
+                    x:Name="USBDiskPathLabel"
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    Margin="0,0,0,0"
+                    FontSize="30"
+                    FontWeight="Medium"
+                    Foreground="White"
+                    HorizontalContentAlignment="Right"
+                    VerticalContentAlignment="Center">
+                    USB Disk Path:
+                </Label>
+
+                <TextBox
+                    x:Name="PathUSBDiskTextBox"
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    Margin="5,5,5,5"
+                    FontSize="25"
+                    FontWeight="Medium"
+                    BorderThickness="3"   
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    Background="#1E1E1E"
+                    Foreground="White"
+                    BorderBrush="#555555">
+                </TextBox>
+
+                <Button
+                    x:Name="BrowseUSBDiskButton" 
+                    Style="{StaticResource ButtonStyleRed}"
+                    Click="BrowseUSBDiskButton_Click"
+                    FontSize="25"
+                    FontWeight="Medium"
+                    Grid.Row="5"
+                    Grid.Column="2"
+                    Margin="5,0,5,0"
+                    Focusable="False"
+                    Width="150"
+                    Height="40"
+                    Content="Browse">
+                </Button>
+
+                <Label
+                    x:Name="USBDiskBackupPathLabel"
+                    Grid.Row="6"
+                    Grid.Column="0"
+                    Margin="0,0,0,0"
+                    FontSize="30"
+                    FontWeight="Medium"
+                    Foreground="White"
+                    HorizontalContentAlignment="Right"
+                    VerticalContentAlignment="Center">
+                    USB Disk Backup Path:
+                </Label>
+
+                <TextBox
+                    x:Name="PathUSBDiskBackupTextBox"
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    Margin="5,5,5,5"
+                    FontSize="25"
+                    FontWeight="Medium"
+                    BorderThickness="3"   
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    Background="#1E1E1E"
+                    Foreground="White"
+                    BorderBrush="#555555">
+                </TextBox>
+
+                <Button
+                    x:Name="BrowseUSBDiskBackupButton" 
+                    Style="{StaticResource ButtonStyleRed}"
+                    Click="BrowseUSBDiskBackupButton_Click"
+                    FontSize="25"
+                    FontWeight="Medium"
+                    Grid.Row="6"
+                    Grid.Column="2"
+                    Margin="5,0,5,0"
+                    Focusable="False"
+                    Width="150"
+                    Height="40"
+                    Content="Browse">
+                </Button>
+
+                <Label
+                    x:Name="TypesOfAdministrationLabel"
+                    Grid.Row="7"
+                    Grid.Column="0"
+                    Margin="0,0,0,0"
+                    FontSize="30"
+                    FontWeight="Medium"
+                    Foreground="White"
+                    HorizontalContentAlignment="Right"
+                    VerticalContentAlignment="Center">
+                    Types of administration:
+                </Label>
+
+                <ComboBox x:Name="TypesOfAdministrationNumber"
+                        Grid.Row="7"
+                        Grid.Column="1"
+                        FontWeight="Medium"
+                        Margin="5,0,5,0"
+                        VerticalContentAlignment="Center"
+                        Cursor="Hand">
+                    <ComboBoxItem Content="0. Simulator and USBDisk is same." />
+                    <ComboBoxItem Content="1. One USBDisk can use for more once Simulator and you can load Items separately." />
+                </ComboBox>
+
+
+                <Grid x:Name="OK_Cancel_Grid"
+                    Grid.Row="8"
+                    Grid.Column="1"
+                    >
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button
+                        x:Name="OK" 
+                        Style="{StaticResource ButtonStyleRed}"
+                        Click="OK_Click"
+                        FontSize="36"
+                        FontWeight="Medium"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        >OK
+                    </Button>
+
+                    <Button
+                        x:Name="Cancel" 
+                        Style="{StaticResource ButtonStyleRed}"
+                        Click="Cancel_Click"
+                        FontSize="36"
+                        FontWeight="Medium"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        >Cancel
+                    </Button>
+                </Grid>
+            </Grid>
+        </Border>
+    </Border>
+</Window>
