@@ -107,7 +107,7 @@
                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                             <TextBlock Text="Manager for Omron" Foreground="Lime" FontSize="45" FontWeight="Bold" HorizontalAlignment="Center"/>
                             <TextBlock Text="FH Vision System Simulators" Foreground="Lime" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center"/>
-                            <TextBlock Text="Version 1.0.0" Foreground="White" FontSize="20" HorizontalAlignment="Center" Margin="0,5,0,30"/>
+                            <TextBlock Text="Version 1.0.1" Foreground="White" FontSize="20" HorizontalAlignment="Center" Margin="0,5,0,30"/>
 
                             <TextBlock Text="Designed and Created" FontFamily="MV Boli" Foreground="Lime" FontSize="26" HorizontalAlignment="Center"/>
                             <TextBlock Text="by Georg Black" FontFamily="MV Boli" Foreground="Lime" FontSize="26" HorizontalAlignment="Center"/>

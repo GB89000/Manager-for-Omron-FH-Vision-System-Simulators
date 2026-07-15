@@ -32,5 +32,8 @@
     <Setting Name="TypesOfAdministrationNumber" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
+    <Setting Name="LauncherPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\OMRON\FZ_FH_FJ_SimulatorLauncher\FH-SimulatorLauncher.exe</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

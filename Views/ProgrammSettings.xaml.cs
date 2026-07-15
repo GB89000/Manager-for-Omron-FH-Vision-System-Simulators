@@ -2,6 +2,7 @@
 using ManagerForOmronFHVisionSystemSimulators.ViewModels;
 using ManagerForOmronFHVisionSystemSimulators.Views;
 using Microsoft.Win32;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -24,12 +25,13 @@ namespace SettingsNamespace
             this.DataContext = this;
             _mainWindow = mainWindow;
 
+            PathLauncherTextBox.Text = Convert.ToString(Settings.Default.LauncherPath);
             PathSimulatorTextBox.Text = Convert.ToString(Settings.Default.SimulatorPath);
             PathSimulatorsTextBox.Text = Convert.ToString(Settings.Default.SimulatorsPath);
             PathSimulatorBackupsTextBox.Text = Convert.ToString(Settings.Default.SimulatorBackupsPath);
             PathUSBDiskTextBox.Text = Convert.ToString(Settings.Default.USBDisksPath);
             PathUSBDiskBackupTextBox.Text = Convert.ToString(Settings.Default.USBDiskBackupsPath);
-            TypesOfAdministrationNumber.SelectedIndex = ManagerForOmronFHVisionSystemSimulators.Properties.Settings.Default.TypesOfAdministrationNumber;
+            TypesOfAdministrationNumber.SelectedIndex = Settings.Default.TypesOfAdministrationNumber;
             // === NEU: Die gespeicherte Skalierung vorladen und die Box richtig auswählen ===
             Scale = Settings.Default.UIScale;
             if (Scale == 0.5) UiScaleComboBox.SelectedIndex = 0;
@@ -172,8 +174,43 @@ namespace SettingsNamespace
             }
         }
 
+        private void BrowseLauncherButton_Click(object sender, RoutedEventArgs e)
+        {
+            // 1. Datei-Auswahldialog erstellen
+            OpenFileDialog dialog = new OpenFileDialog();
+
+            // 2. Filter setzen, damit standardmäßig nur .exe-Dateien angezeigt werden
+            dialog.Filter = "Ausführbare Dateien (*.exe)|*.exe|Alle Dateien (*.*)|*.*";
+            dialog.Title = "Launcher-Datei (.exe) auswählen";
+
+            // 3. Optional: Startverzeichnis intelligent setzen
+            string aktuellerPfad = PathLauncherTextBox.Text;
+            if (!string.IsNullOrWhiteSpace(aktuellerPfad))
+            {
+                // Falls in der TextBox bereits ein vollständiger Pfad zu einer Datei steht,
+                // extrahieren wir das Verzeichnis, um dem User direkt diesen Ordner zu zeigen.
+                if (File.Exists(aktuellerPfad))
+                {
+                    dialog.InitialDirectory = Path.GetDirectoryName(aktuellerPfad);
+                }
+                // Falls nur ein Ordnerpfad drinsteht, nehmen wir diesen direkt.
+                else if (Directory.Exists(aktuellerPfad))
+                {
+                    dialog.InitialDirectory = aktuellerPfad;
+                }
+            }
+
+            // 4. Dialog anzeigen
+            if (dialog.ShowDialog() == true)
+            {
+                // 5. Den vollständigen Pfad zur .exe-Datei in die TextBox schreiben (FileName statt FolderName)
+                PathLauncherTextBox.Text = dialog.FileName;
+            }
+        }
+
         private void OK_Click(object sender, RoutedEventArgs e)
         {
+            Settings.Default.LauncherPath = PathLauncherTextBox.Text;
             Settings.Default.SimulatorPath = PathSimulatorTextBox.Text;
             Settings.Default.SimulatorsPath = PathSimulatorsTextBox.Text;
             Settings.Default.SimulatorBackupsPath = PathSimulatorBackupsTextBox.Text;

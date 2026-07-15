@@ -142,5 +142,17 @@ namespace ManagerForOmronFHVisionSystemSimulators.Properties {
                 this["TypesOfAdministrationNumber"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\OMRON\\FZ_FH_FJ_SimulatorLauncher\\FH-SimulatorLauncher.exe")]
+        public string LauncherPath {
+            get {
+                return ((string)(this["LauncherPath"]));
+            }
+            set {
+                this["LauncherPath"] = value;
+            }
+        }
     }
 }

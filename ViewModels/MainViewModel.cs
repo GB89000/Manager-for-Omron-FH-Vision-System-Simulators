@@ -42,6 +42,7 @@ namespace ManagerForOmronFHVisionSystemSimulators.ViewModels
             RenameUSBDiskCommand = new RelayCommand(ExecuteRenameUSBDisk, CanExecuteUSBFunction);
             RenameItemCommand = new RelayCommand(ExecuteRenameItem);
             LoadItemCommand = new RelayCommand(ExecuteLoadItem, CanExecuteUSBFunction);
+            StartLauncherCommand = new RelayCommand(ExecuteStartLauncher);
             LoadCommand = new RelayCommand(ExecuteLoad);
             DeleteSelectedCommand = new RelayCommand(ExecuteDeleteSelected);
             OpenItemFolderCommand = new RelayCommand(ExecuteOpenItemFolder);
@@ -66,6 +67,7 @@ namespace ManagerForOmronFHVisionSystemSimulators.ViewModels
 
         #region Commands & Properties
 
+        public ICommand StartLauncherCommand { get; }
         public ICommand OpenSettingsCommand { get; }
         public ICommand OpenInfoCommand { get; }
         public ICommand MinimizeCommand { get; }
@@ -418,6 +420,7 @@ namespace ManagerForOmronFHVisionSystemSimulators.ViewModels
 
                 TriggerTabLoading();
                 RestoreListFocus();
+                CheckActiveFiles();
             }
         }
 
@@ -441,6 +444,48 @@ namespace ManagerForOmronFHVisionSystemSimulators.ViewModels
         private void ExecuteClose(object parameter)
         {
             Application.Current.Shutdown();
+        }
+
+        private void ExecuteStartLauncher(object parameter)
+        {
+            string pfad = Settings.Default.LauncherPath;
+
+            // 1. Prüfen, ob der Pfad leer ist oder die Datei gar nicht existiert
+            if (string.IsNullOrWhiteSpace(pfad) || !File.Exists(pfad))
+            {
+                CustomMessageBox.Show(
+                    "The specified path is invalid or the launcher file could not be found.",
+                    "Notice",
+                    Application.Current.MainWindow,
+                    Brushes.Yellow
+                );
+                return;
+            }
+
+            try
+            {
+                // 2. Start-Informationen konfigurieren
+                var startInfo = new ProcessStartInfo
+                {
+                    FileName = pfad,
+                    // Setzt den Ordner der .exe als Arbeitsverzeichnis (wichtig, damit der Launcher seine Ressourcen findet)
+                    WorkingDirectory = Path.GetDirectoryName(pfad),
+                    // UseShellExecute stellt sicher, dass Windows die App wie bei einem Doppelklick startet
+                    UseShellExecute = true
+                };
+
+                // 3. Programm starten
+                Process.Start(startInfo);
+            }
+            catch (Exception ex) // Fängt Fehler ab (z. B. fehlende Admin-Rechte)
+            {
+                CustomMessageBox.Show(
+                    $"The file could not be started:\n{ex.Message}",
+                    "Error",
+                    Application.Current.MainWindow,
+                    Brushes.Red
+                );
+            }
         }
 
         private void ExecuteRename(object parameter)

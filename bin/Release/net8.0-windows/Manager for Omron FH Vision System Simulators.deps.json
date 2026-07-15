@@ -1,0 +1,97 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "Manager for Omron FH Vision System Simulators/1.0.0": {
+        "dependencies": {
+          "MahApps.Metro.IconPacks.Codicons": "6.2.1",
+          "MahApps.Metro.IconPacks.ForkAwesome": "6.2.1",
+          "MahApps.Metro.IconPacks.PhosphorIcons": "6.2.1"
+        },
+        "runtime": {
+          "Manager for Omron FH Vision System Simulators.dll": {}
+        }
+      },
+      "MahApps.Metro.IconPacks.Codicons/6.2.1": {
+        "dependencies": {
+          "MahApps.Metro.IconPacks.Core": "6.2.1"
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/MahApps.Metro.IconPacks.Codicons.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.2.1.0"
+          }
+        }
+      },
+      "MahApps.Metro.IconPacks.Core/6.2.1": {
+        "runtime": {
+          "lib/net8.0-windows7.0/MahApps.Metro.IconPacks.Core.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.2.1.0"
+          }
+        }
+      },
+      "MahApps.Metro.IconPacks.ForkAwesome/6.2.1": {
+        "dependencies": {
+          "MahApps.Metro.IconPacks.Core": "6.2.1"
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/MahApps.Metro.IconPacks.ForkAwesome.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.2.1.0"
+          }
+        }
+      },
+      "MahApps.Metro.IconPacks.PhosphorIcons/6.2.1": {
+        "dependencies": {
+          "MahApps.Metro.IconPacks.Core": "6.2.1"
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/MahApps.Metro.IconPacks.PhosphorIcons.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.2.1.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Manager for Omron FH Vision System Simulators/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MahApps.Metro.IconPacks.Codicons/6.2.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-+pQeVS29X7pG7qrJ4y0ZPSRUQVaWidwwM/tdoIABo40MQpC0Izg8t1BXnXprP0C10Od9Zzsi2Qt/GWgfEW/aSw==",
+      "path": "mahapps.metro.iconpacks.codicons/6.2.1",
+      "hashPath": "mahapps.metro.iconpacks.codicons.6.2.1.nupkg.sha512"
+    },
+    "MahApps.Metro.IconPacks.Core/6.2.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ySAyax37C045Ef1ufN33yQjn3qPM1MuQLgKdxZKYUAl2uZaIrn9wCeBNvfG46QPNRvBFLR6gVKTs6O3o81LNhQ==",
+      "path": "mahapps.metro.iconpacks.core/6.2.1",
+      "hashPath": "mahapps.metro.iconpacks.core.6.2.1.nupkg.sha512"
+    },
+    "MahApps.Metro.IconPacks.ForkAwesome/6.2.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-luVbeZF3hH7DQl+QCT6NV9vGJ8a1CtOJd0W2AShOms8YuAU4RnsHMm9jrrONpCBeVqQI8mpFRTzd0bYit8gilg==",
+      "path": "mahapps.metro.iconpacks.forkawesome/6.2.1",
+      "hashPath": "mahapps.metro.iconpacks.forkawesome.6.2.1.nupkg.sha512"
+    },
+    "MahApps.Metro.IconPacks.PhosphorIcons/6.2.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-PTfhQXTe3INWoELJy0dCfm92/faS6hF3F/C4kZyTiVe9Pgf21cd5v7kIBeT2m/eNHyEBFZX2ifmk8Q3xK1dr7g==",
+      "path": "mahapps.metro.iconpacks.phosphoricons/6.2.1",
+      "hashPath": "mahapps.metro.iconpacks.phosphoricons.6.2.1.nupkg.sha512"
+    }
+  }
+}

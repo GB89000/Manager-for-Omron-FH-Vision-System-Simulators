@@ -46,6 +46,7 @@
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
                     <RowDefinition Height="100"/> 
                 </Grid.RowDefinitions>
                 
@@ -314,8 +315,51 @@
                 </Button>
 
                 <Label
-                    x:Name="TypesOfAdministrationLabel"
+                    x:Name="LauncherPathLabel"
                     Grid.Row="7"
+                    Grid.Column="0"
+                    Margin="0,0,0,0"
+                    FontSize="30"
+                    FontWeight="Medium"
+                    Foreground="White"
+                    HorizontalContentAlignment="Right"
+                    VerticalContentAlignment="Center">
+                    Launcher Path:
+                </Label>
+
+                <TextBox
+                    x:Name="PathLauncherTextBox"
+                    Grid.Row="7"
+                    Grid.Column="1"
+                    Margin="5,5,5,5"
+                    FontSize="25"
+                    FontWeight="Medium"
+                    BorderThickness="3"   
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    Background="#1E1E1E"
+                    Foreground="White"
+                    BorderBrush="#555555">
+                </TextBox>
+
+                <Button
+                    x:Name="BrowseLauncherButton" 
+                    Style="{StaticResource ButtonStyleRed}"
+                    Click="BrowseLauncherButton_Click"
+                    FontSize="25"
+                    FontWeight="Medium"
+                    Grid.Row="7"
+                    Grid.Column="2"
+                    Margin="5,0,5,0"
+                    Focusable="False"
+                    Width="150"
+                    Height="40"
+                    Content="Browse">
+                </Button>
+
+                <Label
+                    x:Name="TypesOfAdministrationLabel"
+                    Grid.Row="8"
                     Grid.Column="0"
                     Margin="0,0,0,0"
                     FontSize="30"
@@ -327,7 +371,7 @@
                 </Label>
 
                 <ComboBox x:Name="TypesOfAdministrationNumber"
-                        Grid.Row="7"
+                        Grid.Row="8"
                         Grid.Column="1"
                         FontWeight="Medium"
                         Margin="5,0,5,0"
@@ -339,7 +383,7 @@
 
 
                 <Grid x:Name="OK_Cancel_Grid"
-                    Grid.Row="8"
+                    Grid.Row="9"
                     Grid.Column="1"
                     >
                     <Grid.RowDefinitions>

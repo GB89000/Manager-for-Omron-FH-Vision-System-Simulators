@@ -35,6 +35,7 @@
 
     <Window.InputBindings>
         <KeyBinding Key="F1" Command="{Binding OpenInfoCommand}" />
+        <KeyBinding Key="F5" Command="{Binding StartLauncherCommand}" />
         <KeyBinding Key="L" Modifiers="Control" Command="{Binding LoadItemCommand}" />
         <KeyBinding Key="L" Modifiers="Control+Shift" Command="{Binding LoadCommand}" />
         <KeyBinding Key="S" Modifiers="Control" Command="{Binding SaveSimulatorChangesCommand}" />
@@ -201,20 +202,55 @@
                     Grid.Column="0">
                     <!-- Defenition Zeile -->
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="120"/>
-                        <RowDefinition Height="120"/>
-                        <RowDefinition Height="120"/>
-                        <RowDefinition Height="120"/>
-                        <RowDefinition Height="120"/>
-                        <RowDefinition Height="120"/>
-                        <RowDefinition Height="120"/>
+                        <RowDefinition Height="110"/>
+                        <RowDefinition Height="110"/>
+                        <RowDefinition Height="110"/>
+                        <RowDefinition Height="110"/>
+                        <RowDefinition Height="110"/>
+                        <RowDefinition Height="110"/>
+                        <RowDefinition Height="110"/>
+                        <RowDefinition Height="110"/>
+                        <RowDefinition Height="110"/>
+                        <RowDefinition Height="110"/>
                         <RowDefinition Height="20*"/>
-                        <RowDefinition Height="120"/>
-                        <RowDefinition Height="120"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="110"/>
                         <RowDefinition Height="1"/>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="120"/>
                     </Grid.RowDefinitions>
+                    <Button x:Name="StartSelectedItemBtn"
+                        Style="{StaticResource ButtonStyleBlueLight}"
+                        Visibility="{Binding IsUSBFeatureEnabled, Converter={StaticResource BoolToVis}}"
+                        Command="{Binding StartLauncherCommand}"
+                        ToolTip="Shortcut: F5"
+                        Margin="0,5,0,5"
+                        Focusable="False"
+                        Width="300"
+                        Height="100"
+                        Grid.Row="0">
+                        <Grid Width="280">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <iconPacks:PackIconForkAwesome Grid.Column="0" 
+                                Kind="Play" 
+                                Foreground="White"
+                                Width="80" 
+                                Height="80" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" 
+                                Text="Start&#x0a;Launcher" 
+                                Foreground="White" 
+                                FontSize="30" 
+                                FontWeight="Medium" 
+                                TextAlignment="Center" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
                     <Button x:Name="LoadSelectedItemBtn"
                         Style="{StaticResource ButtonStyleBlue}"
                         Visibility="{Binding IsUSBFeatureEnabled, Converter={StaticResource BoolToVis}}"
@@ -223,8 +259,8 @@
                         Margin="0,5,0,5"
                         Focusable="False"
                         Width="300"
-                        Height="110"
-                        Grid.Row="0">
+                        Height="100"
+                        Grid.Row="1">
                         <Grid Width="280">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100"/>
@@ -240,7 +276,7 @@
                             <TextBlock Grid.Column="1" 
                                Text="Load Item" 
                                Foreground="White" 
-                               FontSize="36" 
+                               FontSize="30" 
                                FontWeight="Medium" 
                                TextAlignment="Center" 
                                HorizontalAlignment="Center" 
@@ -254,8 +290,8 @@
                             Margin="0,5,0,5"
                             Focusable="False"
                             Width="300"
-                            Height="110"
-                            Grid.Row="1">
+                            Height="100"
+                            Grid.Row="2">
                         <Grid Width="280">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100"/>
@@ -271,7 +307,7 @@
                             <TextBlock Grid.Column="1" 
                                 Text="Load" 
                                 Foreground="White" 
-                                FontSize="36" 
+                                FontSize="30" 
                                 FontWeight="Medium" 
                                 TextAlignment="Center" 
                                 HorizontalAlignment="Center" 
@@ -285,8 +321,8 @@
                         Margin="0,5,0,5"
                         Focusable="False"
                         Width="300"
-                        Height="110"
-                        Grid.Row="2">
+                        Height="100"
+                        Grid.Row="3">
                         <Grid Width="280">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100"/>
@@ -302,7 +338,7 @@
                             <TextBlock Grid.Column="1" 
                                 Text="Simulator&#x0a;Changes" 
                                 Foreground="White" 
-                                FontSize="36" 
+                                FontSize="30" 
                                 FontWeight="Medium" 
                                 TextAlignment="Center" 
                                 HorizontalAlignment="Center" 
@@ -317,8 +353,8 @@
                             Margin="0,5,0,5"
                             Focusable="False"
                             Width="300"
-                            Height="110"
-                            Grid.Row="3">
+                            Height="100"
+                            Grid.Row="4">
                         <Grid Width="280">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100"/>
@@ -334,7 +370,7 @@
                             <TextBlock Grid.Column="1" 
                                 Text="USBDisk&#x0a;Changes" 
                                 Foreground="White" 
-                                FontSize="36" 
+                                FontSize="30" 
                                 FontWeight="Medium" 
                                 TextAlignment="Center" 
                                 HorizontalAlignment="Center" 
@@ -348,8 +384,8 @@
                             Margin="0,5,0,5"
                             Focusable="False"
                             Width="300"
-                            Height="110"
-                            Grid.Row="4">
+                            Height="100"
+                            Grid.Row="5">
                         <Grid Width="280">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100"/>
@@ -365,7 +401,7 @@
                             <TextBlock Grid.Column="1" 
                                 Text="Active&#x0a;USBDisk" 
                                 Foreground="White" 
-                                FontSize="36" 
+                                FontSize="30" 
                                 FontWeight="Medium" 
                                 TextAlignment="Center" 
                                 HorizontalAlignment="Center" 
@@ -379,8 +415,8 @@
                          Margin="0,5,0,5"
                          Focusable="False"
                          Width="300"
-                         Height="110"
-                         Grid.Row="5">
+                         Height="100"
+                         Grid.Row="6">
                         <Grid Width="280">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100"/>
@@ -394,9 +430,9 @@
                                  HorizontalAlignment="Center" 
                                  VerticalAlignment="Center"/>
                             <TextBlock Grid.Column="1" 
-                                 Text="Open Tab&#x0a;or Item" 
+                                 Text="Open Item" 
                                  Foreground="White" 
-                                 FontSize="36" 
+                                 FontSize="30" 
                                  FontWeight="Medium" 
                                  TextAlignment="Center" 
                                  HorizontalAlignment="Center" 
@@ -410,7 +446,7 @@
                             Margin="0,5,0,5"
                             Focusable="False"
                             Width="300"
-                            Height="110"
+                            Height="100"
                             Grid.Row="9">
                         <Grid Width="280">
                             <Grid.ColumnDefinitions>
@@ -426,7 +462,7 @@
                                 VerticalAlignment="Center"/>
                             <TextBlock Grid.Column="1" 
                                 Foreground="White" 
-                                FontSize="36" 
+                                FontSize="30" 
                                 FontWeight="Medium" 
                                 TextAlignment="Center" 
                                 HorizontalAlignment="Center" 
@@ -445,7 +481,7 @@
                             Margin="0,5,0,5"
                             Focusable="False"
                             Width="300"
-                            Height="110"
+                            Height="100"
                             Grid.Row="8"
                             ToolTip="Shortcut: CTRL+B">
                         <Grid Width="280">
@@ -463,7 +499,7 @@
                             <TextBlock Grid.Column="1" 
                                 Text="Backup /&#x0a;Restore" 
                                 Foreground="White" 
-                                FontSize="36" 
+                                FontSize="30" 
                                 FontWeight="Medium" 
                                 TextAlignment="Center" 
                                 HorizontalAlignment="Center" 
@@ -479,8 +515,8 @@
                         Margin="0,5,0,5"
                         Focusable="False"
                         Width="300"
-                        Height="110"
-                        Grid.Row="6">
+                        Height="100"
+                        Grid.Row="7">
                         <Grid Width="280">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100"/>
@@ -496,7 +532,7 @@
                             <TextBlock Grid.Column="1" 
                                 Text="Delete&#x0a;Item(s)"
                                 Foreground="Black" 
-                                FontSize="36" 
+                                FontSize="30" 
                                 FontWeight="Medium" 
                                 TextAlignment="Center" 
                                 HorizontalAlignment="Center" 
